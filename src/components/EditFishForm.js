@@ -1,12 +1,25 @@
 import React, { Component } from "react";
+import PropTypes from "prop-types";
 
 export default class EditFishForm extends Component {
+  static propTypes = {
+    fish: PropTypes.shape({
+      image: PropTypes.string,
+      name: PropTypes.string,
+      desc: PropTypes.string,
+      status: PropTypes.string,
+      price: PropTypes.number,
+    }),
+    index: PropTypes.string,
+    updateFish: PropTypes.func,
+  };
+
   handleChange = (e) => {
     e.preventDefault();
-    // console.log(e.target.value);
+    console.log(e.currentTarget.value);
     const updatedFish = {
       ...this.props.fish,
-      [e.target.name]: e.target.value,
+      [e.currentTarget.name]: e.currentTarget.value,
     };
     this.props.updateFish(this.props.index, updatedFish);
     // console.log(updatedFish);
@@ -45,6 +58,9 @@ export default class EditFishForm extends Component {
           onChange={this.handleChange}
           value={this.props.fish.image}
         />
+        <button onClick={() => this.props.deleteFish(this.props.index)}>
+          Remove Fish
+        </button>
       </div>
     );
   }
